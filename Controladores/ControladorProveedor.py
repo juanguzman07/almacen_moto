@@ -16,8 +16,8 @@ class ControladorProveedor():
 
     def create(self, elProveedor):
         print("Creando Proveedor")
-        nuevoProducto = Proveedor(elProveedor)
-        return self.repositorioProveedor.save(nuevoProducto)
+        nuevoProveedor = Proveedor(elProveedor)
+        return self.repositorioProveedor.save(nuevoProveedor)
 
     def show(self, id):
         print("Mostrando Proveedor Con id ", id)

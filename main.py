@@ -8,6 +8,7 @@ from waitress import serve
 from Controladores.ControladorAdministrador import ControladorAdministrador
 from Controladores.ControladorProductos import ControladorProductos
 from Controladores.ControladorProveedor import ControladorProveedor
+from Controladores.ControladorInvetario import ControladorInventario
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -15,7 +16,7 @@ cors = CORS(app)
 miControladorAdministrador = ControladorAdministrador()
 miControladorProductos = ControladorProductos()
 miControladorProveedor = ControladorProveedor()
-
+miControladorInventario = ControladorInventario()
 
 ########################### Servicio Administrador #####################3
 @app.route("/administradores", methods=['GET'])
@@ -116,6 +117,39 @@ def eliminarProveedor(id):
     return jsonify(json)
 
 ################################### Servicio Inventario ###############################
+
+@app.route("/Inventario", methods=['GET'])
+def getInventarios():
+    json = miControladorInventario.index()
+    return jsonify(json)
+
+
+@app.route("/Inventario/<string:id>", methods=['GET'])
+def getInventario(id):
+    json = miControladorInventario.show(id)
+    return jsonify(json)
+
+
+@app.route("/Inventario/Productos/<string:id_Productos>/Proveedor/<string:id_Proveedor>", methods=['POST'])
+def crearInventario(id_Productos, id_Proveedor):
+    data = request.get_json()
+    json = miControladorInventario.create(data, id_Productos, id_Proveedor)
+    return jsonify(json)
+
+
+@app.route("/Inventario/<string:id>/Productos/<string:id_Productos>/Proveedor/<string:id_Proveedor>", methods=['PUT'])
+def modificarInventario(id, id_Productos, id_Proyecto):
+    data = request.get_json()
+    json = miControladorInventario.update(id, id_Productos, id_Proyecto)
+    return jsonify(json)
+
+
+@app.route("/Inventario/<string:id>", methods=['DELETE'])
+def eliminarInventario(id):
+    json = miControladorInventario.delete(id)
+    return jsonify(json)
+
+
 
 
 @app.route("/", methods=['GET'])
